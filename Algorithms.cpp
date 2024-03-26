@@ -73,6 +73,7 @@ Token getNextToken(FILE* input) {
 
 int main() {
     printf("Enter an expression (end with a dot): \n");
+    printf("what the hack is this (Osamah) \n");
 
     Token token;
     do {
