@@ -19,7 +19,7 @@ class LinkedList { //single linked list
 public:
     Node* head;
     LinkedList();
-
+    ~LinkedList();
     void insert(const char character);
     void printAll();
 };
@@ -51,6 +51,26 @@ LinkedList::LinkedList() {
 
     head = nullptr;
 }
+
+LinkedList::~LinkedList()
+{
+        Node* p = head;
+        Iterator* pi = headI;
+        tail = nullptr;
+
+        while (head) {
+            head = head->next;
+            delete p;
+            p = head;
+        }
+
+        while (headI) {
+            headI = headI->iNext;
+            delete pi;
+            pi = headI;
+        }
+}
+
 
 void LinkedList::printAll() {
     
