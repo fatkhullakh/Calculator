@@ -1,7 +1,126 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <string.h>
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    char value;
+    Node* next;
+
+    Node() {
+        value = '\0';
+        next = nullptr;
+    }
+};
+
+class LinkedList { //single linked list
+public:
+    Node* head;
+    LinkedList();
+
+    void insert(const char character);
+    void printAll();
+};
+
+void LinkedList::insert(const char character) {
+
+    Node* newNode = new Node();
+    newNode->value = character;
+
+
+    if (head == nullptr) //first node
+    {
+        head = newNode;
+        return;
+    }
+    else
+    {
+        Node* temp;
+        temp = head;
+        while (temp->next != nullptr)  // to find the last node, by keep jumping the next pointers of the nodes
+        {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+}
+
+LinkedList::LinkedList() {
+
+    head = nullptr;
+}
+
+void LinkedList::printAll() {
+    
+    Node* print = head;
+    while (print != nullptr)
+    {
+        cout << print->value; 
+        print = print->next;
+    }
+}
+
+void lineInput(LinkedList& LL) {
+     
+    char character;
+    cin >> character;
+    while (character != '.')
+    {
+        LL.insert(character);
+        cin >> character;
+    }
+}
+
+int main() {
+
+    int n = 0; 
+    cin >> n; //number of tests
+    
+    LinkedList LL;
+    for (int i = 0; i < n; i++)
+    {
+        lineInput(LL);
+    }    
+
+    LL.printAll();
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 typedef enum {
     NUMBER, OPERATOR, FUNCTION, PARENTHESIS, END
@@ -59,7 +178,7 @@ Token getNextToken(FILE* input) {
         ungetc(ch, input); // The last character read is not part of the function name
         if (isFunctionName(funcName)) {
             strcpy_s(token.func, funcName);
-            token.type = FUNCTION;   
+            token.type = FUNCTION;
         }
     }
     else {
@@ -69,36 +188,4 @@ Token getNextToken(FILE* input) {
     }
 
     return token;
-}
-
-int main() {
-    printf("Enter an expression (end with a dot): \n");
-    printf("what the hack is this (Osamah) \n");
-    printf("aaaaa magic");
-
-    Token token;
-    do {
-        token = getNextToken(stdin);
-        switch (token.type) {
-        case NUMBER:
-            printf("Number: %d\n", token.value);
-            break;
-        case OPERATOR:
-            printf("Operator: %c\n", token.op);
-            break;
-        case FUNCTION:
-            printf("Function: %s\n", token.func);
-            break;
-        case PARENTHESIS:
-            printf("Parenthesis: %c\n", token.op);
-            break;
-        case END:
-            printf("End of expression.\n");
-            break;
-        default:
-            break;
-        }
-    } while (token.type != END);
-
-    return 0;
 }
